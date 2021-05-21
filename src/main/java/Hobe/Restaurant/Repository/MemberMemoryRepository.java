@@ -5,11 +5,12 @@ import org.springframework.stereotype.Repository;
 
 import java.util.*;
 
-@Repository
+
 public class MemberMemoryRepository implements MemberRepository {
 
     Map<Long,Member> memberDB = new HashMap<>(); //id와 Member로 회원 저장해주는 자료구조.
     private static long sequence = 0L; //아이디 자동 증가해주는 역할.
+
 
     public Member save(Member member) {
         member.setId(sequence++);

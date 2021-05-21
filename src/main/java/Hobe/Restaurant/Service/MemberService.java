@@ -7,11 +7,10 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
-@Service
+
 public class MemberService {
     private final MemberRepository memberDB;
 
-    @Autowired
     public MemberService(MemberRepository memberDB) {
 
         this.memberDB = memberDB;
