@@ -8,12 +8,12 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
+
 public class BookingService {
     private final BookingRepository bookingDB;
     private final TableService tableService;
     private final MemberService memberService;
-    @Autowired
+
     public BookingService(BookingRepository bookingRepository, TableService tableService, MemberService memberService) {
         this.bookingDB = bookingRepository;
         this.tableService = tableService;

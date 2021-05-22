@@ -8,11 +8,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
 public class TableService {
     private final TableRepository tableDB;
 
-    @Autowired
     public TableService(TableRepository tableDB) {
         this.tableDB = tableDB;
     }

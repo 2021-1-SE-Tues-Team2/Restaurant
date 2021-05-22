@@ -3,7 +3,7 @@ package Hobe.Restaurant.Domain;
 public class Table {
      long tableNumber;
      int maxNumber; //테이블에 앉을 수 있는 수.
-     boolean Available; //테이블 이용 가능한지 안한지.
+     boolean Available = true; //테이블 이용 가능한지 안한지.
 
     public boolean isAvailable() {
         return Available;

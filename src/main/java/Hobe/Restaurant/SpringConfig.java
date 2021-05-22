@@ -1,10 +1,9 @@
 
 package Hobe.Restaurant;
 
-import Hobe.Restaurant.Service.MemberService;
-import Hobe.Restaurant.Repository.JdbcMemberRepository;
-import Hobe.Restaurant.Repository.MemberMemoryRepository;
-import Hobe.Restaurant.Repository.MemberRepository;
+import Hobe.Restaurant.Service.*;
+import Hobe.Restaurant.Repository.*;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -28,4 +27,27 @@ public class SpringConfig {
         //return new MemberMemoryRepository();
         return new JdbcMemberRepository(dataSource);
     }
+
+
+    @Bean
+    public TableService tableService() {
+        return new TableService(tableRepository());
+    }
+    @Bean
+    public TableRepository tableRepository() {
+        //return new TableMemoryRepository();
+        return new JdbcTableRepository(dataSource);
+    }
+
+
+    @Bean
+    public BookingService bookingService() {
+        return new BookingService(bookingRepository(), tableService(), memberService());
+    }
+    @Bean
+    public BookingRepository bookingRepository() {
+        //return new BookingMemory();
+        return new JdbcBookingRepository(dataSource);
+    }
+
 }

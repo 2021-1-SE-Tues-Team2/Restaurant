@@ -94,8 +94,29 @@ public class JdbcMemberRepository implements MemberRepository{
     }
 
     @Override
-    public Optional<Member> findByName_Phone(String name, String phone) {
-        return Optional.empty();
+    public Optional<Member> findByName_Phone(String name, String Phone_Num) {
+        String sql = "select * from member where name = ? AND Phone_num = ?";
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        try {
+            conn = getConnection();
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, name);
+            pstmt.setString(2, Phone_Num);
+            rs = pstmt.executeQuery();
+            if(rs.next()) {
+                Member member = new Member();
+                member.setId(rs.getLong("id"));
+                member.setName(rs.getString("name"));
+                return Optional.of(member);
+            }
+            return Optional.empty();
+        } catch (Exception e) {
+            throw new IllegalStateException(e);
+        } finally {
+            close(conn, pstmt, rs);
+        }
     }
 
     @Override
@@ -124,8 +145,30 @@ public class JdbcMemberRepository implements MemberRepository{
     }
 
     @Override
-    public Optional<Member> findByPhone(String phoneNum) {
-        return Optional.empty();
+    public Optional<Member> findByPhone(String Phone_Num) {
+
+        String sql = "select * from member where Phone_Num = ?";
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        try {
+            conn = getConnection();
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, Phone_Num);
+            rs = pstmt.executeQuery();
+            if(rs.next()) {
+                Member member = new Member();
+                member.setId(rs.getLong("id"));
+                member.setName(rs.getString("name"));
+                return Optional.of(member);
+            } else {
+                return Optional.empty();
+            }
+        } catch (Exception e) {
+            throw new IllegalStateException(e);
+        } finally {
+            close(conn, pstmt, rs);
+        }
     }
 
 

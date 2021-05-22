@@ -16,7 +16,7 @@ public class MemberService {
         this.memberDB = memberDB;
     }
 
-    public boolean CheckLogin(String name, String phoneNum ){
+    public boolean CheckLogin(String name, String phoneNum){
         Optional<Member> member = memberDB.findByName_Phone(name,phoneNum);
         return member.isPresent();
         //저장된 값이 존재하면 true를 반환하고, 값이 존재하지 않으면 false를 반환함.

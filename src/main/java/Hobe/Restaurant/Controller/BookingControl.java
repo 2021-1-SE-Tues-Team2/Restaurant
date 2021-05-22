@@ -33,6 +33,7 @@ public class BookingControl {
         String[] today_Date = format.format(date).split(" ");
        //예약 페이지 보여주기 전에 현재 테이블 정보를 넘겨야된다.
         List<Table> tableList = tableService.showTables();
+        System.out.println("테이블 리스트 진입");
         for(Table table : tableList){
             System.out.println(table.isAvailable()); //콘솔화면 출력용
         }

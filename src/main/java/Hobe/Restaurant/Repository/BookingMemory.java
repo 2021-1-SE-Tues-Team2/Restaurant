@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.*;
 
-@Repository
+
 public class BookingMemory implements BookingRepository{
 
     //bookingDB 딕셔너리 = { 회원의 기본키인 ID : Booking 클래스 }
