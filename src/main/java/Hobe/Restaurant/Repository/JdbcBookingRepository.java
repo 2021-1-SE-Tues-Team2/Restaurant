@@ -8,6 +8,11 @@ import org.springframework.jdbc.datasource.DataSourceUtils;
 import javax.sql.DataSource;
 import java.sql.*;
 import java.util.*;
+/*
+    해결할 것
+    예약변경에서 변경이전의 예약의 날짜도 검사해서 같은 날 같은 시각으로 변경이 안됨.
+    삭제를 멤버아이디 기준으로 해서, 해당 회원의 모든 예약이 삭제됨.
+ */
 
 public class JdbcBookingRepository implements BookingRepository{
     private final DataSource dataSource;
@@ -96,7 +101,7 @@ public class JdbcBookingRepository implements BookingRepository{
                 booking.setDate(rs.getString("date"));
                 booking.setStartTime(rs.getString("startTime"));
                 booking.setEndTime(rs.getString("endTime"));
-                booking.setTableNumber(rs.getInt("tableNumer"));
+                booking.setTableNumber(rs.getInt("tableNumber"));
                 booking.setHowMany(rs.getInt("howMany"));
                 bookings.add(booking);
             }
@@ -127,7 +132,7 @@ public class JdbcBookingRepository implements BookingRepository{
                 booking.setDate(rs.getString("date"));
                 booking.setStartTime(rs.getString("startTime"));
                 booking.setEndTime(rs.getString("endTime"));
-                booking.setTableNumber(rs.getInt("tableNumer"));
+                booking.setTableNumber(rs.getInt("tableNumber"));
                 booking.setHowMany(rs.getInt("howMany"));
                 bookings.add(booking);
             }
@@ -141,10 +146,47 @@ public class JdbcBookingRepository implements BookingRepository{
 
     }
     public void UpdateBooking(Booking booking,long MemberID){
-        //머지
+        String sql = "update booking set date = ?, startTime = ?, " +
+                "endTime = ?, tableNumber = ?, howMany = ? " +
+                "where memberId = ?";
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        try {
+            conn = getConnection();
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, booking.getDate());
+            pstmt.setString(2, booking.getStartTime());
+            pstmt.setString(3, booking.getEndTime());
+            pstmt.setInt(4, booking.getTableNumber());
+            pstmt.setInt(5, booking.getHowMany());
+            pstmt.setLong(6, MemberID);
+            rs = pstmt.executeQuery();
+
+        } catch (Exception e) {
+            throw new IllegalStateException(e);
+        } finally {
+            close(conn, pstmt, rs);
+        }
     }
     public void DeleteBooking(long MemberID){
-        //머임
+        String sql = "delete from booking where memberid = ?";
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        try {
+            conn = getConnection();
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setLong(1, MemberID);
+            rs = pstmt.executeQuery();
+
+        } catch (Exception e) {
+            throw new IllegalStateException(e);
+        } finally {
+            close(conn, pstmt, rs);
+        }
     }
 
     private Connection getConnection() {
