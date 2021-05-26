@@ -35,7 +35,7 @@
   </style>
   <!-- 헤더 -->
   <style>
-    #main-header { padding: 40px 50px; }
+    #main-header { padding: 40px 50px 0 50px; }
     .master-title {
       font-size: 30px;
       color: #181818;
@@ -83,7 +83,7 @@
     /* #page-wrapper 태그의 padding 속성으로 내용물 너비는 920픽셀 */
     #content { overflow: hidden; }
     #main-section {
-      padding: 0 100px 0 100px;
+      padding: 0 60px 0 60px;
       float: left;
       width: auto;
     }
@@ -107,6 +107,7 @@
     }
 
     .article-body {
+      padding: 0 100px 0 100px;
       font-size: 14px;
     }
   </style>
@@ -118,9 +119,18 @@
   </style>
 
   <style>
+    .rotate{
+      -ms-transform: rotate(90deg); /* IE 9 */
+      -webkit-transform: rotate(90deg); /* Chrome, Safari, Opera */
+      transform: rotate(90deg);
+    }
+  </style>
+
+  <style>
     #main-footer{
       background-color: #1f1d1d;
       color: white;
+
     }
   </style>
 
@@ -150,9 +160,6 @@
       <li class="outer-menu-item">
         <span class="menu-title"><a href="/Master">관리자 -> 초기 세팅하기</a></span>
       </li>
-      <li class="outer-menu-item">
-        <span class="menu-title"><a href="/">리뷰</a></span>
-      </li>
     </ul>
   </div>
   <div id="page-wrapper">
@@ -173,13 +180,31 @@
   </hgroup>
 </header>
 <div id="content">
-  <div style="text-align: center;">
-    <img src="https://cdn-cajkg.nitrocdn.com/ZJzLelPaQQUYcIzKvveTxTAioLgFVwpU/assets/static/optimized/rev-cd29551/wp-content/uploads/2021/02/dining-in-an-iranian-restaurant-768x512.jpg" width="700">
+  <div style="text-align: center;" class="rotate">
+    <img src="https://cdn-cajkg.nitrocdn.com/ZJzLelPaQQUYcIzKvveTxTAioLgFVwpU/assets/static/optimized/rev-cd29551/wp-content/uploads/2019/06/top-view-for-box-of-2-burgers-home-made.jpg" width="350">
   </div>
   <section id="main-section">
     <article>
+      <div class="article-header">
+        <h1 style="text-align: center;" class="article-title">땡땡 레스토랑 소개</h1>
+      </div>
       <div class="article-body">
+
         <br />
+        <br />
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent commodo justo ac lorem pretium vitae rhoncus lectus ullamcorper. Aliquam facilisis euismod diam sollicitudin commodo. Nunc sagittis sapien venenatis lorem vestibulum cursus pellentesque mi sodales. Donec pellentesque hendrerit turpis, vitae tempor nibh ultricies at. Aliquam consequat rutrum erat, vel sodales tellus sagittis at. Proin sollicitudin augue eu augue vehicula vitae bibendum odio porta. Aliquam elit arcu, venenatis in imperdiet ut, scelerisque non dolor. Donec in vulputate tortor. Fusce egestas rutrum mi quis ultricies. Vivamus blandit augue ac felis ullamcorper consectetur. Curabitur pretium fringilla neque, vitae cursus massa auctor vitae. Integer non massa sit amet lacus accumsan blandit. Vivamus fermentum tellus at justo iaculis eu tempus lorem venenatis. Suspendisse quis eros consectetur tellus posuere commodo. In hac habitasse platea dictumst.</p>
+        <br />
+        <p>Praesent orci quam, ornare sed scelerisque ac, porta a justo. Pellentesque quis magna sed magna vehicula semper ac ut enim. Duis ut mattis ligula. Mauris at sem elit. Vestibulum justo tortor, malesuada non tincidunt quis, feugiat ut metus. Maecenas varius neque ut diam ultrices scelerisque. Praesent lectus massa, tincidunt vel adipiscing non, vehicula ut magna. Cras quis lacinia ipsum. Sed consequat consectetur volutpat. Integer sed tortor risus. Donec accumsan ante vel justo porttitor volutpat.</p>
+        <br />
+        <br />
+        <br />
+        <br />
+        <h2 style="text-align: center;">찾아오시는 길</h2>
+        <br />
+        <br />
+        <div style="text-align: center;">
+            <img src="https://i.ibb.co/Fn4qrBD/map.png" alt="약도" width="460">
+        </div>
         <br />
         <br />
         <br />
@@ -209,7 +234,7 @@
       </tr>
     </table>
   </div>
-  <span>Created By Team-Second</span>
+  <span>Created By Team-Second</a>
 </footer>
 </div>
 </body>

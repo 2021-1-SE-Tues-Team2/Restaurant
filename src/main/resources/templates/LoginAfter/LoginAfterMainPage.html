@@ -1,135 +1,216 @@
-<!DOCTYPE HTML>
-<!--
-	Forty by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
   <title>땡땡 레스토랑</title>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-  <link rel="stylesheet" href="static/css/main.css" />
-  <noscript><link rel="stylesheet" href="static/css/noscript.css" /></noscript>
+  <!-- 초기화 -->
   <style>
-    .links{
-      font-size: 2em;
+    * {
+      margin: 0; padding: 0;
+      font-family: '맑은 고딕', 'Malgun Gothic', Gothic, sans-serif ;
     }
-    .major>h1{
-      font-size: 50px;
+    a { text-decoration: none; color: white; }
+    li { list-style: none; }
+
+  </style>
+  <!-- 기본 클래스 -->
+  <style>
+    .pull-left { float: left; }
+    .pull-right { float: right; }
+  </style>
+  <!-- 페이지 -->
+  <style>
+    body {
+      width: auto; margin: 0 auto;
+      background: #E6E6E6;;
+    }
+
+    #page-wrapper {
+      background: white;
+      padding: 0 100px 0 100px;
+      border-radius: 5px;
+      box-shadow: 0 2px 6px rgba(100, 100, 100, 0.3);
     }
   </style>
+  <!-- 헤더 -->
+  <style>
+    #main-header { padding: 40px 50px; }
+    .master-title {
+      font-size: 30px;
+      color: #181818;
+      text-align: center;
+    }
+    .master-description {
+      font-size: 15px; font-weight: 500;
+      color: #383838;
+    }
+  </style>
+  <!-- 네비게이션 -->
+  <style>
+    #main-navigation {
+      padding: 0 100px 0 100px;
+      background-color: black;
+      color: white;
+      border-top: 1px solid #C8C8C8;
+      border-bottom: 1px solid #C8C8C8;
+      margin-bottom: 20px;
+      height:auto;
+      overflow:hidden;
+    }
+
+    .outer-menu-item {
+      float: left;
+      position: relative;
+
+    }
+    .outer-menu-item:hover {
+      background: black;
+      color: green
+    }
+
+    .menu-title {
+      display: block;
+      height: 30px; line-height: 30px;
+      text-align: center;
+      padding: 5px 15px;
+    }
+  </style>
+
+  <!-- 중앙 내용 -->
+  <style>
+    /* body 태그의 너비: 960픽셀 */
+    /* #page-wrapper 태그의 padding 속성으로 내용물 너비는 920픽셀 */
+    #content { overflow: hidden; }
+    #main-section {
+      padding: 0 100px 0 100px;
+      float: left;
+      width: auto;
+    }
+    #main-aside {
+      float: right;
+      width: 200px;
+    }
+  </style>
+  <!-- 좌측 내용물 -->
+  <style>
+    article {
+      padding: 0 10px 20px 10px;
+      border-bottom: 1px solid #C8C8C8;
+    }
+
+    .article-header { padding: 20px 0; }
+    .article-title {
+      font-size: 25px;
+      font-weight: 500;
+      padding-bottom: 10px;
+    }
+
+    .article-body {
+      font-size: 14px;
+    }
+  </style>
+
+  <style>
+    .master-title a{
+      color: black;
+    }
+  </style>
+
+  <style>
+    #main-footer{
+      background-color: #1f1d1d;
+      color: white;
+    }
+  </style>
+
+  <style>
+    #table{
+      display: table; margin-left: auto; margin-right: auto;
+      padding: 15px;
+    }
+  </style>
+
+  <script></script>
+  <script></script>
 </head>
-<body class="is-preload">
-
-<!-- Wrapper -->
-<div id="wrapper">
-
-  <!-- Header -->
-  <header id="header" class="alt">
-    <a href="index.html" class="logo"><span>땡땡 레스토랑</span></a>
-    <nav>
-      <a href="#menu">Menu</a>
-    </nav>
-  </header>
-
-  <!-- Menu -->
-  <nav id="menu">
-    <ul class="links">
-      <li><a href="/">레스토랑소개</a></li>
-      <li><a href="/booking">예약</a></li>
-      <li><a href="/GoMyPage">마이페이지</a></li>
-      <li><a href="/Logout">로그아웃</a></li>
+<body>
+<nav id="main-navigation">
+  <div class="pull-left">
+    <ul class="outer-menu">
+      <li class="outer-menu-item">
+        <span class="menu-title"><a href="/LoginAfter/LoginAfterIntroduction";>레스토랑소개</a></span>
+      </li>
+      <li class="outer-menu-item">
+        <span class="menu-title"><a href="/booking">예약</a></span>
+      </li>
+      <li class="outer-menu-item">
+        <span class="menu-title"><a href="/GoMyPage">My Page</a></span>
+      </li>
+      <li class="outer-menu-item">
+        <span class="menu-title"><a href="/Master">관리자 -> 초기 세팅하기</a></span>
+      </li>
+      <li class="outer-menu-item">
+        <span class="menu-title"><a href="/">리뷰</a></span>
+      </li>
     </ul>
-    <ul class="actions stacked">
-      <li><a href="/login" class="button fit">로그인</a></li>
-    </ul>
-  </nav>
-
-  <!-- Banner -->
-  <section id="banner" class="major">
-    <div class="inner">
-      <header class="major">
-        <h1>Welcome 2조 레스토랑</h1>
-        <p th:text="${data}+'환영합니다.'"></p>
-      </header>
-      <div class="content">
-        <ul class="actions">
-          <li><a href="#one" class="button next scrolly"></a></li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <!-- Main -->
-  <div id="main">
-
-    <!-- One -->
-    <section id="one" class="tiles">
-      <article>
-        <span class="image">
-          <img src="images/pic01.jpg" alt="" />
-        </span>
-        <header class="major">
-          <h3><a href="landing.html" class="link">Aliquam</a></h3>
-          <p>Ipsum dolor sit amet</p>
-        </header>
-      </article>
-      <article>
-        <span class="image">
-          <img src="images/pic02.jpg" alt="" />
-        </span>
-        <header class="major">
-          <h3><a href="landing.html" class="link">Tempus</a></h3>
-          <p>feugiat amet tempus</p>
-        </header>
-      </article>
-      <article>
-        <span class="image">
-          <img src="images/pic03.jpg" alt="" />
-        </span>
-        <header class="major">
-          <h3><a href="landing.html" class="link">Magna</a></h3>
-          <p>Lorem etiam nullam</p>
-        </header>
-      </article>
-      <article>
-        <span class="image">
-          <img src="images/pic04.jpg" alt="" />
-
-          </span>
-        <header class="major">
-          <h3><a href="landing.html" class="link">dmaadmadf</a></h3>
-          <p>Lorem etiam nullam</p>
-        </header>
-      </article>
-    </section>
-    <!-- Footer -->
-    <footer id="footer">
-      <div class="inner">
-        <ul class="icons">
-          <li><a href="#" class="icon brands alt fa-twitter"><span class="label">Twitter</span></a></li>
-          <li><a href="#" class="icon brands alt fa-facebook-f"><span class="label">Facebook</span></a></li>
-          <li><a href="#" class="icon brands alt fa-instagram"><span class="label">Instagram</span></a></li>
-          <li><a href="#" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
-          <li><a href="#" class="icon brands alt fa-linkedin-in"><span class="label">LinkedIn</span></a></li>
-        </ul>
-        <ul class="copyright">
-          <li>&copy; Untitled</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-        </ul>
-      </div>
-    </footer>
-
   </div>
-
-  <!-- Scripts -->
-  <script src="js/jquery.min.js"></script>
-  <script src="js/jquery.scrolly.min.js"></script>
-  <script src="js/jquery.scrollex.min.js"></script>
-  <script src="js/browser.min.js"></script>
-  <script src="js/breakpoints.min.js"></script>
-  <script src="js/util.js"></script>
-  <script src="js/main.js"></script>
-
+  <div id="page-wrapper">
+    <div class="pull-right">
+      <ul class="outer-menu">
+        <li class="outer-menu-item">
+          <span class="menu-title"><a href="/Logout">로그아웃</a></span>
+        </li>
+        <li class="outer-menu-item">
+          <span class="menu-title"><p th:text="${data}+'환영합니다.'"></p></span>
+        </li>
+      </ul>
+    </div>
+</nav>
+<header id="main-header">
+  <hgroup>
+    <h1 class="master-title"><a href="/LoginAfter/LoginAfterMainPage";>땡땡 레스토랑</a></h1>
+  </hgroup>
+</header>
+<div id="content">
+  <div style="text-align: center;">
+    <img src="https://cdn-cajkg.nitrocdn.com/ZJzLelPaQQUYcIzKvveTxTAioLgFVwpU/assets/static/optimized/rev-cd29551/wp-content/uploads/2021/02/dining-in-an-iranian-restaurant-768x512.jpg" width="700">
+  </div>
+  <section id="main-section">
+    <article>
+      <div class="article-body">
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+      </div>
+    </article>
+  </section>
+</div>
+<footer id="main-footer">
+  <div id="table">
+    <table style="border: 1px solid #444444;" >
+      <tr>
+        <th>주&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;소 : </th>
+        <td>어디어디 어디어디</td>
+      </tr>
+      <tr>
+        <th>영업 시간 : </th>
+        <td>11~20시</td>
+      </tr>
+      <tr>
+        <th>전&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;화 : </th>
+        <td>000-0000-0000</td>
+      </tr>
+      <tr>
+        <th>이 &nbsp;메 &nbsp;일 : </th>
+        <td>ddangddang@gmail.com</td>
+      </tr>
+    </table>
+  </div>
+  <span>Created By Team-Second</span>
+</footer>
+</div>
 </body>
 </html>

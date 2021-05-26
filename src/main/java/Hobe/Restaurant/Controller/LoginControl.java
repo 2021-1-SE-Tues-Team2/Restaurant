@@ -60,13 +60,20 @@ public class LoginControl {
             memberService.printMember();
             return "redirect:/";
         }
-        return "redirect:/"; //회원가입 실패 화면이 보여야함.
+        return "signRegistration"; //회원가입 실패 화면이 보여야함.
     }
     @GetMapping("/Logout")
     public String LogOut(){
         currentMember = null; //로그아웃을 했으니 현재 이용중인 사용자(currentMember)는 null임.
         return "redirect:/";
     }
+    @GetMapping("sign/signRegistration")
+    public String SignFail(){
+        return "signRegistration";
+    }
+
+
+
 
 
 }

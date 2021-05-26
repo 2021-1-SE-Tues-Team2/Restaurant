@@ -82,14 +82,16 @@ public class MyPageController {
         return "MyPage/myPage";
     }
     @PostMapping("My_delete")
-    public String Booking_Delete(){
+    public String Booking_Delete(Model model){
         System.out.println("취소 버튼 클릭");
 //        정말 취소하실건가요?
 //        ㅇㅇ
         if(bookingService.Delete_Booking(MemberId)) {
             System.out.println("삭제되었습니다.");
         }
-        return "redirect:/";
+        model.addAttribute("data",LoginControl.currentMember.getName());
+        return "LoginAfter/LoginAfterMainPage";
+
     }
 
 }
