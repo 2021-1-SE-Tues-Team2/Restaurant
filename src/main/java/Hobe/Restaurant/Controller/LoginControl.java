@@ -1,6 +1,8 @@
 package Hobe.Restaurant.Controller;
 
+import Hobe.Restaurant.Domain.Admin;
 import Hobe.Restaurant.Domain.Member;
+import Hobe.Restaurant.Service.AdminService;
 import Hobe.Restaurant.Service.MemberService;
 import Hobe.Restaurant.Service.TableService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,10 +16,12 @@ public class LoginControl {
     private final MemberService memberService;
     public static Member currentMember;
     private final TableService tableService; //임시용 ...아마도 메인화면 보여질 때 테이블 넣어야될듯.
+    private final AdminService adminService;
     @Autowired
-    public LoginControl(MemberService memberService, TableService tableService) {
+    public LoginControl(MemberService memberService, TableService tableService, AdminService adminService) {
         this.memberService = memberService;
         this.tableService = tableService;
+        this.adminService = adminService;
     }
 
     @GetMapping("/login")
@@ -38,6 +42,15 @@ public class LoginControl {
         else {
             this.currentMember = memberService.getMember(memberform.getPhoneNumber());
             model.addAttribute("data",memberform.getName());
+            if(adminService.isAdminInfo()){
+                Admin admin = adminService.outputAdminInfo();
+                model.addAttribute("address",admin.getAddress());
+                model.addAttribute("startTime",admin.getStartTime());
+                model.addAttribute("endTime",admin.getEndTime());
+                model.addAttribute("phoneNumber",admin.getPhoneNumber());
+                model.addAttribute("email",admin.getEmail());
+            }
+
             //아직 데이터베이스 연동 전이라서 테이블 따로 만들어야됌. 이건 관리자 부분에서 다시 구현
             //tableService.testInputTable(); //임시용 테스트 코드
             //
@@ -60,18 +73,13 @@ public class LoginControl {
             memberService.printMember();
             return "redirect:/";
         }
-        return "signRegistration"; //회원가입 실패 화면이 보여야함.
+        return "redirect:/"; //회원가입 실패 화면이 보여야함.
     }
     @GetMapping("/Logout")
     public String LogOut(){
         currentMember = null; //로그아웃을 했으니 현재 이용중인 사용자(currentMember)는 null임.
         return "redirect:/";
     }
-    @GetMapping("sign/signRegistration")
-    public String SignFail(){
-        return "signRegistration";
-    }
-
 
 
 

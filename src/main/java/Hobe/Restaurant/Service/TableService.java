@@ -38,25 +38,8 @@ public class TableService {
 //
 //        System.out.println(tempTable.isAvailable());
 //    }
-    public void testInputTable(){ //임시용 ...아마도 메인화면 보여질 때 테이블 넣어야될듯.
-        Table table1 = new Table();
-        table1.setAvailable(true);
-        table1.setTableNumber(1);
-        table1.setMaxNumber(15);
-        tableDB.save(table1);
-
-        Table table2 = new Table();
-        table2.setAvailable(true);
-        table2.setTableNumber(2);
-        table2.setMaxNumber(4);
-        tableDB.save(table2);
-
-
-        Table table3 = new Table();
-        table3.setAvailable(true);
-        table3.setTableNumber(3);
-        table3.setMaxNumber(7);
-        tableDB.save(table3);
+    public void saveTable(Table table){ //임시용 ...아마도 메인화면 보여질 때 테이블 넣어야될듯.
+        tableDB.save(table);
         System.out.println("테이블 등록이 완료되었습니다.");
     }
     public boolean checkMaxNumber(Booking booking,long TableNumber){

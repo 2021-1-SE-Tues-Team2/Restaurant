@@ -49,5 +49,28 @@ public class SpringConfig {
         //return new BookingMemory();
         return new JdbcBookingRepository(dataSource);
     }
+    @Bean
+    public AdminRepository adminRepository(){
+        return new JdbcAdminRepository(dataSource);
+    }
 
-}
+    @Bean
+    public AdminService adminService(){
+        return new AdminService(adminRepository());
+    }
+
+    @Bean
+    public ReviewRepository reviewRepository(){
+        return new JdbcReviewRepository(dataSource);
+    }
+
+    @Bean
+    public ReviewService reviewService() {
+        return new ReviewService(reviewRepository(), memberRepository());
+    }
+    }
+
+
+
+
+

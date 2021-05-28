@@ -22,17 +22,15 @@ public class MemberService {
         //저장된 값이 존재하면 true를 반환하고, 값이 존재하지 않으면 false를 반환함.
     }
     public boolean Registraion(Member member){
-        boolean a =validateDuplicateMember(member);
-        if(a==false) {
-            memberDB.save(member);
-            return true;
-        }
-        else
-            return false;
+        validateDuplicateMember(member);
+        memberDB.save(member);
+        return true;
     }
-    public boolean validateDuplicateMember(Member member){
-        boolean b = memberDB.findByName(member.getName()).isPresent();
-        return b;
+    public void validateDuplicateMember(Member member){
+        memberDB.findByName(member.getName())
+                .ifPresent(member1 -> {
+                    throw new IllegalStateException("이미 존재하는 회원입니다.");
+                });
     }
     public void printMember(){
         for(Member member : memberDB.findAll()){
@@ -50,5 +48,7 @@ public class MemberService {
     public void Change_AvailableBooing(long id,boolean bool){
         memberDB.findById(id).get().setAvailable_Booking(bool);
     }
+
+
 
 }

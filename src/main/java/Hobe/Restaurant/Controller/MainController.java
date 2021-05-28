@@ -21,15 +21,6 @@ public class MainController {
         this.bookingService = bookingService;
     }
 
-    @GetMapping("Master")
-    public String signTable(Model model) {
-        tableService.testInputTable();
-        if(LoginControl.currentMember == null){
-            return "redirect:/";
-        }
-        model.addAttribute("data",LoginControl.currentMember.getName());
-        return "LoginAfter/LoginAfterMainPage";
-    }
 
     @GetMapping("/introduction")
     public String Introduction() {
@@ -38,7 +29,7 @@ public class MainController {
     @GetMapping("/LoginAfter/LoginAfterMainPage")
     public String LoginAfterMainPage(Model model){
         model.addAttribute("data",LoginControl.currentMember.getName());
-        return "LoginAfter/LoginAfterMainPage";
+        return "LoginAfter/LoginAfterMainPage";                           //관리자가 세팅할 때. 이 페이지로 데이터 넘겨야됌.
     }
     @GetMapping("/LoginAfter/LoginAfterIntroduction")
     public String LoginAfterIntroduction(Model model){

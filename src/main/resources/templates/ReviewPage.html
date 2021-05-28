@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 합쳐지고 최소화된 최신 CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
+    <!-- 부가적인 테마 -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+
+    <!-- 합쳐지고 최소화된 최신 자바스크립트 -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0 auto;
+        }
+        .main{
+            width: 50%;
+            height: 100%;
+            border: 2px solid #cccccc;
+        }
+        table{
+
+            border-collapse:collapse;
+
+        }
+
+        table tr th, td{
+
+            border:1px solid gray;
+
+            text-align:center;
+
+            text-align:center;
+
+            padding:5px;
+    </style>
+
+</head>
+<body>
+<table border="2">
+    <tbody>
+    <tr>
+        <th width="500">후기</th>
+        <th>작성자</th>
+        <th>작성일</th>
+    </tr>
+    <tr th:each="review: ${reviewList}">
+        <td th:text="${review.reviewText}"></td>
+        <td th:text="${review.memberId}"></td>
+        <td th:text="${review.createdAt}"></td>
+    </tr>
+    </tbody>
+</table>
+
+
+<div class="main">
+
+
+    <div class="new_review">
+        <form action="/New_Review" method="POST">
+            <div class="form-group">
+                <label for="reviewText">후기 작성</label>
+                <textarea cols="25" rows="5" type="text" class="form-control" id="reviewText" name="reviewText" placeholder="후기를 입력하세요."></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-default">후기 등록</button>
+        </form>
+    </div>
+
+
+</div>
+</body>
+</html>

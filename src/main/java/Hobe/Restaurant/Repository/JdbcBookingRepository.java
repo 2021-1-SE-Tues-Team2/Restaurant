@@ -37,6 +37,7 @@ public class JdbcBookingRepository implements BookingRepository{
             pstmt.setInt(5, booking.getHowMany());
             pstmt.setLong(6, Memberid);
 
+
             pstmt.executeUpdate();
             rs = pstmt.getGeneratedKeys();
             if (rs.next()) {
@@ -86,6 +87,8 @@ public class JdbcBookingRepository implements BookingRepository{
 
 
     }
+
+
     public List<Booking> findAll() {
         String sql = "select * from booking";
         Connection conn = null;

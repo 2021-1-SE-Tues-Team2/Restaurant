@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 합쳐지고 최소화된 최신 CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
+<!-- 부가적인 테마 -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+
+<!-- 합쳐지고 최소화된 최신 자바스크립트 -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0 auto;
+        }
+        .main{
+            width: 50%;
+            height: 100%;
+            border: 2px solid #cccccc;
+        }
+        .new_info,.update_info,.tableInfo{
+          display: none;
+        }
+    </style>
+    <script>
+      // 가게 정보 변경
+      function update(){ 
+        $('.update_info').css('display','block');
+        $('.new_info').css('display','none');
+        $('.tableInfo').css('display','none');
+        }
+        // 가게 정보 추가
+        function insert(){
+            $('.new_info').css('display','block');
+            $('.update_info').css('display','none');
+            $('.tableInfo').css('display','none');
+          }
+
+        // 테이블 관리
+        function tableInfo(){
+          $('.tableInfo').css('display','block');
+          $('.new_info').css('display','none');
+            $('.update_info').css('display','none');
+    }
+
+    </script>
+    <script>
+      var count = 0;
+      const add_textbox = () => {
+          const box = document.getElementById("box");
+          const newP = document.createElement('p');
+          newP.innerHTML = "<input type='text' placeholder='테이블 번호' name ='tableFormList["+count+"].tableNumber' value="+count+"> <input type='text' placeholder='테이블 최대 가용인원' name ='tableFormList["+count+"].tableMaxNumber' >  <input type='button' value='삭제' onclick='remove(this)'>";
+          box.appendChild(newP);
+          count +=1;
+          var my = document.getElementById("total_table");
+          my.setAttribute('value',count);
+      }
+      const remove = (obj) => {
+        count -=1;
+          document.getElementById('box').removeChild(obj.parentNode);
+          var my = document.getElementById("total_table");
+          my.setAttribute('value',count);
+
+      }
+  </script>
+</head>
+<body>
+    <div class="main">
+
+      <button onclick="update()"  value="UpdateInfo">가게 정보 변경</button>
+      <button onclick="insert()"  value="InsertInfo">가게 정보 추가</button>
+      <button onclick="tableInfo()"  value="TableInfo">테이블 관리</button>
+
+      
+      <div class="update_info">
+        <form action="/admin/adminForm_update" method="POST">
+          <div class="form-group">
+            <label for="address">주소</label>
+            <input type="text" class="form-control" id="address" name="address" placeholder="주소를 입력하세요">
+          </div>
+
+          <div class="form-group">
+              <label for="phoneNum">전화번호</label>
+              <input type="text" class="form-control" id="phoneNum" name="phoneNum" placeholder="전화번호를 입력하세요">
+            </div>
+          
+            <div class="form-group">
+              <label for="startTime">오픈시간</label>
+              <input type="time" class="form-control" id="startTime" name="startTime">
+            </div>
+            
+            <div class="form-group">
+              <label for="endTime">마감시간</label>
+              <input type="time" class="form-control" id="endTime" name="endTime">
+            </div>
+
+            <div class="form-group">
+              <label for="email">이메일</label>
+              <input type="email" class="form-control" id="email" name="email" placeholder="Input Email">
+            </div>
+          
+        
+          <button type="submit" class="btn btn-default">변경</button>
+        </form>
+      </div>
+
+      <div class="new_info">
+        <form action="/admin/adminForm" method="POST">
+          <div class="form-group">
+            <label for="address">주소</label>
+            <input type="text" class="form-control" id="address" name="address" placeholder="주소를 입력하세요">
+          </div>
+
+          <div class="form-group">
+              <label for="phoneNum">전화번호</label>
+              <input type="text" class="form-control" id="phoneNum" name="phoneNum" placeholder="전화번호를 입력하세요">
+            </div>
+          
+            <div class="form-group">
+              <label for="startTime">오픈시간</label>
+              <input type="time" class="form-control" id="startTime" name="startTime">
+            </div>
+            
+            <div class="form-group">
+              <label for="endTime">마감시간</label>
+              <input type="time" class="form-control" id="endTime" name="endTime">
+            </div>
+
+            <div class="form-group">
+              <label for="email">이메일</label>
+              <input type="email" class="form-control" id="email" name="email" placeholder="Input Email">
+            </div>
+          
+        
+          <button type="submit" class="btn btn-default">새로등록</button>
+        </form>
+      </div>
+        
+      <div class="tableInfo">
+        <form action="/admin/TableForm_insert" method="POST">
+          <div id="box">
+            <input type="button" value="추가" onclick="add_textbox()">
+          </div>
+          <input type="text" id ="total_table" name="total_table_count" value=""></input>
+          <input type="submit" value="등록">
+        </form>
+      </div>
+    </div>
+</body>
+</html>
