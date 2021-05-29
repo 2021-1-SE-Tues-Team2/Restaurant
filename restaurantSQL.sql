@@ -16,6 +16,19 @@
 CREATE DATABASE IF NOT EXISTS `restaurant` /*!40100 DEFAULT CHARACTER SET utf8 */;
 USE `restaurant`;
 
+-- 테이블 restaurant.admin 구조 내보내기
+CREATE TABLE IF NOT EXISTS `admin` (
+  `address` varchar(255) DEFAULT NULL,
+  `startTime` varchar(255) DEFAULT NULL,
+  `endTime` varchar(255) DEFAULT NULL,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `phoneNum` varchar(255) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- 내보낼 데이터가 선택되어 있지 않습니다.
+
 -- 테이블 restaurant.booking 구조 내보내기
 CREATE TABLE IF NOT EXISTS `booking` (
   `date` varchar(255) DEFAULT NULL,
@@ -25,9 +38,8 @@ CREATE TABLE IF NOT EXISTS `booking` (
   `howMany` int(11) DEFAULT NULL,
   `memberId` bigint(20) DEFAULT NULL,
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `review` mediumtext DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 
 -- 내보낼 데이터가 선택되어 있지 않습니다.
 
@@ -39,7 +51,18 @@ CREATE TABLE IF NOT EXISTS `member` (
   `available_Booking` tinyint(4) DEFAULT 1,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+
+-- 내보낼 데이터가 선택되어 있지 않습니다.
+
+-- 테이블 restaurant.review 구조 내보내기
+CREATE TABLE IF NOT EXISTS `review` (
+  `reviewText` text DEFAULT NULL,
+  `createdAt` datetime NOT NULL DEFAULT current_timestamp(),
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `memberId` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8;
 
 -- 내보낼 데이터가 선택되어 있지 않습니다.
 
@@ -50,7 +73,7 @@ CREATE TABLE IF NOT EXISTS `table` (
   `Available` tinyint(4) DEFAULT 1,
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=62 DEFAULT CHARSET=utf8;
 
 -- 내보낼 데이터가 선택되어 있지 않습니다.
 
