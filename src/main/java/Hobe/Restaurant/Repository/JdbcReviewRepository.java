@@ -20,7 +20,7 @@ public class JdbcReviewRepository implements ReviewRepository {
 
     @Override
     public Review save(Review review){
-        String sql = "insert into review(memberId, reviewText) values( ?, ?)";
+        String sql = "insert into review(memberId, reviewText, memberName) values( ?, ?, ?)";
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -30,6 +30,7 @@ public class JdbcReviewRepository implements ReviewRepository {
                     Statement.RETURN_GENERATED_KEYS);
             pstmt.setLong(1, review.getMemberId());
             pstmt.setString(2 , review.getReviewText());
+            pstmt.setString(3, review.getMemberName());
             pstmt.executeUpdate();
             rs = pstmt.getGeneratedKeys();
             return review;
@@ -55,6 +56,7 @@ public class JdbcReviewRepository implements ReviewRepository {
                 review.setReviewText(rs.getString("reviewText"));
                 review.setMemberId(rs.getLong("memberId"));
                 review.setCreatedAt(rs.getTimestamp("createdAt"));
+                review.setMemberName(rs.getString("memberName"));
                 reviews.add(review);
             }
             return reviews;

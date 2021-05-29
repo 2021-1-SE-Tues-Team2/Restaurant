@@ -8,6 +8,16 @@ public class Review {
     long memberId;
     Timestamp createdAt;
 
+    public String getMemberName() {
+        return memberName;
+    }
+
+    public void setMemberName(String memberName) {
+        this.memberName = memberName;
+    }
+
+    String memberName;
+
     public String getReviewText(){return reviewText;}
 
     public void setReviewText(String reviewText)

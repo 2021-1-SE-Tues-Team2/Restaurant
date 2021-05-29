@@ -52,7 +52,7 @@
     </tr>
     <tr th:each="review: ${reviewList}">
         <td th:text="${review.reviewText}"></td>
-        <td th:text="${review.memberId}"></td>
+        <td th:text="${review.memberName}"></td>
         <td th:text="${review.createdAt}"></td>
     </tr>
     </tbody>
