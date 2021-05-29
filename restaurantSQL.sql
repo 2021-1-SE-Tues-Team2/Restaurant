@@ -61,6 +61,7 @@ CREATE TABLE IF NOT EXISTS `review` (
   `createdAt` datetime NOT NULL DEFAULT current_timestamp(),
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `memberId` bigint(20) DEFAULT NULL,
+  `memberName` VARCHAR(255) NULL DEFAULT NULL COLLATE 'utf8_general_ci',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8;
 
