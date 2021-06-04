@@ -36,7 +36,8 @@ public class LoginControl {
         boolean result = memberService.CheckLogin(memberform.getName(), memberform.getPhoneNumber());
         if(!result) return "loginFail"; //로그인 실패시 -> loginFail.html.
         else {
-            this.currentMember = memberService.getMember(memberform.getPhoneNumber());
+            this.currentMember = memberService.getMemberWithName(memberform.getName());
+            System.out.println(this.currentMember.getName()+"로그인");
             model.addAttribute("data",memberform.getName());
             //아직 데이터베이스 연동 전이라서 테이블 따로 만들어야됌. 이건 관리자 부분에서 다시 구현
             //tableService.testInputTable(); //임시용 테스트 코드

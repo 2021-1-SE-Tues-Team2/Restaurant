@@ -43,6 +43,11 @@ public class MemberService {
         //회원의 객체를 넘겨줌.
         return memberDB.findByPhone(PhoneNumber).get();
     }
+
+    public Member getMemberWithName(String Name){ //사용자의 이름으로 멤버 서비스가 로그인한
+        //회원의 객체를 넘겨줌.
+        return memberDB.findByName(Name).get();
+    }
     public boolean Check_Booing_Member(long id){
         //만약 회원이 예약을 했으면 또 하면 안된다.
         return memberDB.findById(id).get().isAvailable_Booking();
