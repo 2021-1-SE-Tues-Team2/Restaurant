@@ -23,8 +23,10 @@ public class ReviewControl {
     @GetMapping("/Review")
     public String ReviewPage(Model model){
         List<Review> reviewList = reviewService.getAll();
-        model.addAttribute("reviewList",reviewList);
-        model.addAttribute("reviewText",reviewList.get(0).getReviewText());
+        if(reviewList.size() != 0) {
+            model.addAttribute("reviewList", reviewList);
+            model.addAttribute("reviewText", reviewList.get(0).getReviewText());
+        }
         System.out.println("보여줄 후기 목록");
         Collections.reverse(reviewList);
         if(reviewList.size() > 10)

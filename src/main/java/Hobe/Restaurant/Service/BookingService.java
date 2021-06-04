@@ -3,10 +3,13 @@ package Hobe.Restaurant.Service;
 import Hobe.Restaurant.Domain.Booking;
 import Hobe.Restaurant.Domain.Member;
 import Hobe.Restaurant.Repository.BookingRepository;
+import Hobe.Restaurant.Repository.TableRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 
 public class BookingService {
@@ -19,7 +22,7 @@ public class BookingService {
         this.tableService = tableService;
         this.memberService = memberService;
     }
-    public void reservation(Booking booking,long id){ //long id = 사용자의 ID값
+    public boolean reservation(Booking booking,long id){ //long id = 사용자의 ID값
         //BookingControl.class에서의 주석처리한 부분 예외처리 하기..
         validateDuplicateReservation(booking,id);
         long TableNumber = booking.getTableNumber();
@@ -30,19 +33,24 @@ public class BookingService {
             //테이블 관련해서는 예약이 가능하니까 예약하기
             Booking newBook = bookingDB.save(id,booking); //테이블 예약.
             //tableService.changeAvailable(TableNumber); //현재 이용중이니까 True->False로 변경함.
+            return true;
         }
         else{
             memberService.Change_AvailableBooing(id,true); //위에 조건에 따라서 예약이 가능상태에서 갑자기 불가능 상태로 바꼈으니까
-                                                                    //member의 예약 가능 상태를 true로 변경해주기.
-            throw new IllegalStateException("예약이 불가능합니다.");
+            return false;//member의 예약 가능 상태를 true로 변경해주기.
+            //throw new IllegalStateException("예약이 불가능합니다."); //이거 하나
+
         }
 
     }
     public void validateDuplicateReservation(Booking booking,Long id){
-        if(memberService.Check_Booing_Member(id)) //회원이 예약했으면 false, 예약을 안했으면 예약이 가능한거니까 true
-            memberService.Change_AvailableBooing(id,false);
-        else
+        if(memberService.Check_Booing_Member(id)) { //회원이 예약했으면 false, 예약을 안했으면 예약이 가능한거니까 true
+            memberService.Change_AvailableBooing(id, false);
+
+        }
+        else {
             throw new IllegalStateException("기존에 예약을 했습니다.");
+        }
     }
     public boolean OverlapReservation(Booking booking,List<Booking>books){ //겹치는 시간대가 있는지 체크하기.
         //코드 더럽네요..또 다른 방법 있으면 수정!!!!
@@ -76,7 +84,11 @@ public class BookingService {
     }
 
     public Booking MyPage_BookingFind(long MemberId){
-        return bookingDB.findByMemberID(MemberId).get();
+        try {
+            return bookingDB.findByMemberID(MemberId).get();
+        } catch(NoSuchElementException e){
+            return null;
+        }
     }
 
     public boolean ChangeBooking(Booking booking,long MemberId) {
@@ -89,7 +101,8 @@ public class BookingService {
             return true;
               }
         else {
-            throw new IllegalStateException("예약이 불가능합니다.");
+            return false;
+            //throw new IllegalStateException("예약이 불가능합니다.");
         }
     }
 

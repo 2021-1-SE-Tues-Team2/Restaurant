@@ -6,13 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
-<body> 
-    <p th:text="${data.Date}">날짜</p>
-    <p th:text="${data.startTime} ">startTime</p>
-    <p th:text="${data.endTime} " >끝나는 시간</p>
-    <p th:text="${data.tableNumber}">테이블번호</p>
-    <p th:text="${data.howMany}">총 인원수</p>
-    <a href="/GoMyPage">마이페이지</a>
-            
+<body>
+<div id = reservation_menu hidden >
+    날짜: <p th:text="${data.Date}">날짜</p>
+    시작 시간: <p th:text="${data.startTime} ">startTime</p>
+    끝나는 시간: <p th:text="${data.endTime} " >끝나는 시간</p>
+    테이블 번호: <p th:text="${data.tableNumber}">테이블번호</p>
+    인원수: <p th:text="${data.howMany}">총 인원수</p>
+
+</div>
+<script>
+    alert(document.getElementById('reservation_menu').textContent);
+    location.href="/GoMyPage";
+</script>
 </body>
 </html>

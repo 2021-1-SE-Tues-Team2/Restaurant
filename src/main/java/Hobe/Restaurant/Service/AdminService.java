@@ -20,9 +20,11 @@ public class AdminService {
 
     }
     public boolean isAdminInfo(){
+
         return adminDB.output()!= null?true:false;
     }
     public void UpdateAdminInfo(Admin admin){
+
         adminDB.UpdateInfo(admin);
     }
 }

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -62,13 +63,21 @@ public class BookingControl {
         //가능한지 안가능한지 체크도 해야됌....
         //이런 예외처리는 BookingService 클래스에서 작성하면 좋을듯!
         //위의 과정이 다 끝난 후 이제
-        if(tableService.checkTable(bookingForm.getTableNumber()))
-            bookingService.reservation(booking,id); //예약서비스한테 예약해달라고 booking 객체와 , 사용자 id 를 넘긴다.
+        if(tableService.checkTable(bookingForm.getTableNumber())) {
+            if(bookingService.reservation(booking, id)) { //예약서비스한테 예약해달라고 booking 객체와 , 사용자 id 를 넘긴다.
 
-        model.addAttribute("data",booking);
-        return "Reservation/showReservation";
+                model.addAttribute("data", booking);
+                return "Reservation/showReservation";
+            }
+           else{
+               return "Reservation/reservation_fail";
+            }
 
+        }else{
+            return "Reservation/not_table";
+        }
     }
+
 
 }
 

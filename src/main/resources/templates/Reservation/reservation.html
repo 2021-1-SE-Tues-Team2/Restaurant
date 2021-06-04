@@ -1,48 +1,698 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>땡땡 레스토랑</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <!-- 초기화 -->
     <style>
-        input{
-            display: block;
+        * {
+            margin: 0; padding: 0;
+            font-family: '맑은 고딕', 'Malgun Gothic', Gothic, sans-serif ;
+        }
+        a { text-decoration: none; color: white; }
+        li { list-style: none; }
+
+    </style>
+    <!-- 기본 클래스 -->
+    <style>
+        .pull-left { float: left; }
+        .pull-right { float: right; }
+    </style>
+    <!-- 페이지 -->
+    <style>
+        body {
+            width: auto; margin: 0 auto;
+            background: #E6E6E6;;
+        }
+
+        #page-wrapper {
+            background: white;
+            padding: 0 100px 0 100px;
+            border-radius: 5px;
+            box-shadow: 0 2px 6px rgba(100, 100, 100, 0.3);
         }
     </style>
+    <!-- 헤더 -->
+    <style>
+        #main-header { padding: 40px 50px; }
+        .master-title {
+            font-size: 30px;
+            color: #181818;
+            text-align: center;
+        }
+        .master-description {
+            font-size: 15px; font-weight: 500;
+            color: #383838;
+        }
+    </style>
+    <!-- 네비게이션 -->
+    <style>
+        #main-navigation {
+            padding: 0 100px 0 100px;
+            background-color: black;
+            color: white;
+            border-top: 1px solid #C8C8C8;
+            border-bottom: 1px solid #C8C8C8;
+            margin-bottom: 20px;
+            height:auto;
+            overflow:hidden;
+        }
+
+        .outer-menu-item {
+            float: left;
+            position: relative;
+
+        }
+        .outer-menu-item:hover {
+            background: black;
+            color: green
+        }
+
+        .menu-title {
+            display: block;
+            height: 30px; line-height: 30px;
+            text-align: center;
+            padding: 5px 15px;
+        }
+    </style>
+
+    <!-- 중앙 내용 -->
+    <style>
+        /* body 태그의 너비: 960픽셀 */
+        /* #page-wrapper 태그의 padding 속성으로 내용물 너비는 920픽셀 */
+        #content { overflow: hidden; }
+        #main-section {
+            padding: 0 100px 0 100px;
+            float: left;
+            width: auto;
+        }
+        #main-aside {
+            float: right;
+            width: 200px;
+        }
+    </style>
+    <!-- 좌측 내용물 -->
+    <style>
+        article {
+            padding: 0 10px 20px 10px;
+            border-bottom: 1px solid #C8C8C8;
+        }
+
+        .article-header { padding: 20px 0; }
+        .article-title {
+            font-size: 25px;
+            font-weight: 500;
+            padding-bottom: 10px;
+        }
+
+        .article-body {
+            font-size: 14px;
+        }
+    </style>
+
+    <style>
+        .master-title a{
+            color: black;
+        }
+    </style>
+
+    <style>
+        #main-footer{
+            background-color: #1f1d1d;
+            color: white;
+        }
+    </style>
+
+    <style>
+        #table{
+            display: table; margin-left: auto; margin-right: auto;
+            padding: 15px;
+        }
+
+
+        footer{
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+        }
+        form.was-validated input:invalid {
+            border-color: red;
+        }
+        .clicked {
+            background-color: red;
+        }
+    </style>
+
+    <!-- 중앙 내용물 -->
+    <style>
+
+        #middle{
+            position: absolute;
+            top: 30%;
+            bottom: 20%;
+            right: 20%;
+            left: 35%;
+
+
+        }
+        .middle_right{
+            float: right;
+            width: 50%;
+            height: 100%;
+            text-align: center;
+
+        }
+        .middle_left{
+            float: left;
+            width: 50%;
+            height: 100%;
+            top: 50%;
+            left: 50%;
+
+        }
+        #reservation{
+            float: left;
+            width: 50%;
+            height: 250px;
+            transform: scale(1.5);
+        }
+        #middle_main{
+            float: left;
+            width: 50%;
+            height: 100%;
+            border: yellow;
+        }
+        #calendar{
+            border:solid #181818;
+        }
+        #middle_calendar{
+            position: absolute;
+            top: 10%;
+            right: 10%;
+        }
+        #one_set{
+            float: left;
+            transform: scale(1.5);
+        }
+        #reservation_date{
+            top: 0;
+            right: 0;
+        }
+        #clock{
+            top: 50px
+        }
+        #scroll_table{
+            height: 100%;
+            overflow-y: scroll;
+        }
+
+    </style>
+    <script type="text/javascript">
+        function makeTableScroll() {
+            // Constant retrieved from server-side via JSP
+            var maxRows = 10;
+
+            var table = document.getElementById('information_table');
+            var wrapper = table.parentNode;
+            var rowsInTable = table.rows.length;
+            var height = 0;
+            if (rowsInTable > maxRows) {
+                for (var i = 0; i < maxRows; i++) {
+                    height += table.rows[i].clientHeight;
+                }
+                wrapper.style.height = height + "px";
+            }
+        }
+    </script>
 </head>
-<body>
-    현재 로그인한 고객 : <h1 th:text="${Member}"></h1>
-    현재 날짜와 시간 : <h1 th:text="${Date}"></h1> -  <h1 th:text="${Time}"></h1>
-    <table>
+<body onload="makeTableScroll();">
+<nav id="main-navigation">
+    <div class="pull-left">
+        <ul class="outer-menu">
+            <li class="outer-menu-item">
+                <span class="menu-title"><a href="/LoginAfter/LoginAfterIntroduction";>레스토랑소개</a></span>
+            </li>
+            <li class="outer-menu-item">
+                <span class="menu-title"><a href="/booking">예약</a></span>
+            </li>
+            <li class="outer-menu-item">
+                <span class="menu-title"><a href="/GoMyPage">My Page</a></span>
+            </li>
+            <li class="outer-menu-item">
+                <span class="menu-title"><a href="/Review">리뷰</a></span>
+            </li>
+        </ul>
+    </div>
+    <div id="page-wrapper">
+        <div class="pull-right">
+            <ul class="outer-menu">
+                <li class="outer-menu-item">
+                    <span class="menu-title"><p th:text="${Member}"></p></span>
+                </li>
+                <li class="outer-menu-item">
+                    <span class="menu-title"><a href="/Logout">로그아웃</a></span>
+                </li>
+            </ul>
+        </div>
+</nav>
+
+<h1 class="master-title"><a href="/LoginAfter/LoginAfterMainPage">땡땡 레스토랑</a></h1>
+
+<div id = "middle_calendar">
+    <table id="calendar">
+        <!-- 뒤에서 변수명을 주기 위해 아이디 생성-->
         <thead>
-            <tr>테이블정보</tr>
+        <tr>
+            <td> <input type = "button" onclick = "before_month()"  value= "<"/> </td>
+            <td colspan="3" id = "year-month">year-month<td>
+            <td> <input type = "button" onclick="next_month()"  value = ">"/> </td>
+        </tr>
         </thead>
+
         <tbody>
-            <tr th:each="table: ${tableList}">
-                <td th:text="${table.tableNumber}">테이블번호</td>
-                <td th:text="${table.maxNumber}">테이블이용번호</td>
-                <td th:text="${table.Available}">테이블이용가능?</td>
-            </tr>
+        <tr>
+            <td>일</td>
+            <td>월</td>
+            <td>화</td>
+            <td>수</td>
+            <td>목</td>
+            <td>금</td>
+            <td>토</td>
+        </tr>
         </tbody>
     </table>
+</div>
+<div id = "middle">
+    <div class="middle-left">
+        <div id = "reservation">
+            현재 날짜와 시간 : <h1 th:text="${Date}"></h1> -  <h1 th:text="${Time}"></h1>
+           <div id = "scroll_table">
+            <table border = '1' id = "information_table" >
+                <thead>
+                <tr>테이블정보</tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>테이블 번호</td>
+                    <td>최대 인원수</td>
+                    <td>이용 가능 여부</td>
+                </tr>
+                <tr th:each="table: ${tableList}" >
+                    <td th:text="${table.tableNumber}">테이블번호</td>
+                    <td th:text="${table.maxNumber}">테이블이용번호</td>
+                    <td th:text="${table.Available}">테이블이용가능?</td>
+                </tr>
+                </tbody>
+            </table>
+           </div>
+        </div>
+    </div>
 
-    <form action="/booking/bookingForm" method="POST">
-        예약하실 테이블 번호 : 
-        <input type="text" name="TableNumber">
-      
-        예약하실 날짜:
-        <input type="date" name="date" value="2021-05-08" >
-        
-        예약하실 시간:
-        <input type="time" name="startTime" value="13:10" min="11:00" max="20:00" >
-            ~
-        <input type="time" name="endTime" value="13:10" min="11:00" max="20:00" > 
+    <div id = "middle_main">
+        <div class="middle-right">
+            <div id = "one_set">
+                <div id = "clock">
+                    예약하실 시간:
+                    <select id = "selectBox_TH" onchange = "input(this)">
+                        <option>11</option>
+                        <option>12</option>
+                        <option>13</option>
+                        <option>14</option>
+                        <option>16</option>
+                        <option>17</option>
+                        <option>18</option>
+                        <option>19</option>
+                        <option></option>
+                    </select>
+                    <select id = "selectBox2_TM" onchange = "input2(this)">
+                        <option>00</option>
+                        <option>10</option>
+                        <option>20</option>
+                        <option>30</option>
+                        <option>40</option>
+                        <option>50</option>
+                    </select>
+                    <input type="text" id = "text" value="11" hidden>
+                    <input type="text" id = "text2"value = "00" hidden>
+                </div>
+                <div id = "humanPart">
+                    인원수:
+                    <table id = "human">
+                        <tr>
+                            <td><input type="button"  onclick = "minus()" value="<"/> </td>
+                            <td><p id = "human_number">1</p></td>
+                            <td><input type="button" onclick = "plus()" value=">"/></td>
+                        </tr>
+                    </table>
+                </div>
 
-        총 몇 명 예약할건데?
-        <input type="text" name="howMany">
-        <button type="submit">버튼</button>
-    </form>
-            
+                <form action="/booking/bookingForm" method="POST">
+                    <div id ="tableNumebr">
+                        예약하실 테이블 번호 :
+                        <select id = "selectBox" onchange="inputOption(this)">
+                            <option  id = "table_option" th:each="table:${tableList}" th:text = "${table.tableNumber}" value = "${table.tableNumber}" >테이블 번호</option>
+                        </select>
+                        <input id = "text_input" type="number" name="TableNumber" value="1"required min="0" readonly hidden>
+                    </div>
+
+                    <div id = "reservation_date">
+                        예약하실 날짜:
+                        <input type="text" id = "calendar_input" name="date"  required readonly>
+                    </div>
+
+
+                    <input type="text" id = "startTime" name="startTime" value="11:00"  required hidden readonly>
+
+                    <input type="text" id = "endTime" name="endTime" value="12:00"  required hidden readonly>
+
+                    <input type="number" id = "howMany" value="1" hidden name="howMany" required min="1" >
+                    <button type="submit">버튼</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+<section id="main-section">
+    <article>
+        <div class="article-body">
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+        </div>
+    </article>
+</section>
+</div>
+<footer id="main-footer">
+    <div id="table">
+        <table style="border: 1px solid #444444;" >
+            <tr>
+                <th>주&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;소 : </th>
+                <td>어디어디 어디어디</td>
+            </tr>
+            <tr>
+                <th>영업 시간 : </th>
+                <td>11~20시</td>
+            </tr>
+            <tr>
+                <th>전&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;화 : </th>
+                <td>000-0000-0000</td>
+            </tr>
+            <tr>
+                <th>이 &nbsp;메 &nbsp;일 : </th>
+                <td>ddangddang@gmail.com</td>
+            </tr>
+        </table>
+    </div>
+    <span>Created By Team-Second</span>
+</footer>
+</div>
+<script>
+    function inputOption(e){
+        const text = e.options[e.selectedIndex].text;
+        document.getElementById('text_input').value = text;
+    }
+    const validityMessage = {
+        badInput: '잘못된 입력입니다',
+        patternMismatch: '_patternMismatch',
+        rangeOverflow: '_rangeOverflow',
+        rangeUnderflow: '_rangeUnderflow',
+        stepMismatch: '_stepMismatch',
+        tooLong: '_tooLong',
+        tooShort: '6자 이상 입력하세요',
+        typeMismatch: '이메일 주소 형식으로 입력하세요',
+        valueMissing: '이메일을 반드시 입력하세요',
+    }
+
+    function getMessage(validity) {
+        for (const key in validityMessage) {
+            if (validity[key]) {
+                return validityMessage[key]
+            }
+        }
+    }
+
+    function showError(input) {
+        // 오류 메시지 스타일
+        document.querySelector('#error').textContent = getMessage(input.validity);
+
+    }
+
+    function onload() {
+        document.querySelectorAll('input').forEach(input => {
+
+            input.addEventListener('invalid', (e) => {
+                document.forms[0].classList.add('was-validated');
+                showError(input)
+
+                /**
+                 * 브라우져 툴팁 숨김
+                 */
+                e.preventDefault();
+            })
+
+            input.addEventListener('input', () => {
+                // 검증 후에 오류 메세지 표시
+                if (document.forms[0].classList.contains('was-validated')) {
+                    input.reportValidity()
+                }
+            })
+        })
+    }
+
+    document.addEventListener('DOMContentLoaded', onload)
+</script>
+<script type="text/javascript">
+    today = new Date();
+
+    //오늘 날짜
+    year = today.getFullYear();
+    //올 해
+    month = today.getMonth();
+    //이번 달
+    YM = year + "년" + (month+1) + "월";
+    // JS는 0~11월로 표시해서 +1을 해준다. (달력의 월을 표시해주기 위함)
+    document.getElementById("year-month").innerHTML = YM;
+    //HEAD태그에 script를 두고하면 작동 안한다. body 맨 밑에서 할 것!
+    first_date = new Date(year,month,1).getDate();
+    // 이번달 첫째날 구하기
+    last_date = new Date(year,month+1,0).getDate();
+    // 이번달 마지막날 구하기 (다음달의 0번째 일은 이번달의 마지막날과 같다.)
+    first_day = new Date(year,month,1).getDay();
+
+    // 오늘 요일의 값 구하기(js는 요일을 숫자로 돌려준다.)
+    // 원하는 요일부터 1일이 출력되게 하기 위함
+    makeCalendar();
+    ClickEvent();
+
+    function serch_today() {
+        today_date = today.getDate();
+        this_month = new Date().getMonth();
+        this_year = new Date().getFullYear();
+        this_YM = this_year + "년" + (this_month+1) + "월";
+        //오늘 날짜를 함수로 정의 -> 올해 오늘 날짜만 색칠되게하기위함
+        for(i=1; i<=last_date; i++){
+            set_id = document.getElementById([i])
+            //오늘 날짜와 비교할 id정의
+            if( today_date == set_id.getAttribute('id')
+                && this_YM == YM){
+                //오늘 날짜값과 달력 날짜의 id값 비교
+                set_id.bgColor = "red";
+                //일치한 값에 컬러주기
+            }
+        }
+    }
+
+    window.onload = search_today();
+
+    function makeCalendar(){
+        calendar = document.getElementById("calendar");
+        //calendar테이블을 변수로 정의
+        row = calendar.insertRow();
+        //calendar에 행을 추가해준다.
+        //변수명(row)을 지정해주는 이유 : 후에 cell이 추가될 자리를 알려주기 위해
+        for(i=0; i<first_day; i++){
+            //first_day에 해당하는 요일까지 열을 만든다.
+            //요일은 0부터 시작하기 때문에 i값도 0에서 시작한다.
+            cell = row.insertCell();
+            //cell.innerHTML = "HI";
+        }
+        for(i=1; i<=last_date; i++){
+            // 달력은 1일부터 시작하므로 i=1
+            if(first_day != 7){
+                //first_day는 0~6이다. 일주일은 한 줄에 7칸이니까 7이상은 찍히지 않는다.
+                cell = row.insertCell();
+                //셀추가
+                cell.setAttribute('id', [i]);
+                cell.setAttribute('class','div2')
+                //모든 셀에 id를 부여함
+                cell.innerHTML = [i];
+
+                //추가된 셀에 i값 입력
+                first_day += 1;
+                //요일값이 하루 추가된걸 for문에 알려줌
+            }
+            else{
+                //첫줄의 first_day 값이 7이되면 작동
+                row = calendar.insertRow();
+                //행을 하나 추가
+                cell = row.insertCell();
+                cell.setAttribute('id', [i]);
+                cell.setAttribute('class','div2')
+                cell.innerHTML = [i];
+
+                //세줄은 위와 같음
+                first_day = first_day - 6;
+                //6을 빼는 이유는 매번 7에서 else문으로 넘어오고, if문이 6번만 하면 되기때문이다.
+                //7을 빼버리면 0부터 시작해서 if문이 7번 실행되고 else로 넘어오므로 -6을한다.
+            }
+        }
+    }
+    function before_month(){
+        while(calendar.rows.length > 2 ){
+            calendar.deleteRow(calendar.rows.length-1);
+        }
+        month = month-1;
+        if(month == -1){
+            year = year -1;
+            month = month +12;
+        }
+        YM = year + "년" + (month+1) + "월";
+        // JS는 0~11월로 표시해서 +1을 해준다. (달력의 월을 표시해주기 위함)
+        document.getElementById("year-month").innerHTML = YM;
+        //HEAD태그에 script를 두고하면 작동 안한다. body 맨 밑에서 할 것!
+        first_date = new Date(year,month,1).getDate();
+        // 이번달 첫째날 구하기
+        last_date = new Date(year,month+1,0).getDate();
+        // 이번달 마지막날 구하기 (다음달의 0번째 일은 이번달의 마지막날과 같다.)
+        first_day = new Date(year,month,1).getDay();
+        makeCalendar();
+        ClickEvent();
+
+    }
+    function next_month(){
+        while(calendar.rows.length > 2 ){
+            calendar.deleteRow(calendar.rows.length-1);
+        }
+        month = month+1;
+        if(month == 12){
+            year = year +1;
+            month = month -12;
+        }
+
+        YM = year + "년" + (month+1) + "월";
+        // JS는 0~11월로 표시해서 +1을 해준다. (달력의 월을 표시해주기 위함)
+        document.getElementById("year-month").innerHTML = YM;
+        //HEAD태그에 script를 두고하면 작동 안한다. body 맨 밑에서 할 것!
+        first_date = new Date(year,month,1).getDate();
+        // 이번달 첫째날 구하기
+        last_date = new Date(year,month+1,0).getDate();
+        // 이번달 마지막날 구하기 (다음달의 0번째 일은 이번달의 마지막날과 같다.)
+        first_day = new Date(year,month,1).getDay();
+        makeCalendar();
+        ClickEvent();
+    }
+    function ClickEvent(){
+        var div2 = document.getElementsByClassName("div2");
+
+        function handleClick(event) {
+
+            console.log(event.target);
+            alert(event.target.innerHTML);
+            // console.log(this);
+            // 콘솔창을 보면 둘다 동일한 값이 나온다
+
+            console.log(event.target.classList);
+
+
+            if (event.target.classList[1] === "clicked") {
+                event.target.classList.remove("clicked");
+            } else {
+                for (var i = 0; i < div2.length; i++) {
+                    div2[i].classList.remove("clicked");
+                }
+
+                event.target.classList.add("clicked");
+            }
+            document.getElementById('calendar_input').value =year+"-"+(month+1)+"-"+ event.target.innerHTML;
+        }
+
+        function init() {
+            T_year = today.getFullYear();
+            T_month = today.getMonth();
+            T_date = today.getDate();
+            // for (var i = 0; i < div2.length; i++) {
+            //div2[i].addEventListener("click", handleClick);
+            // }
+
+            for(var i = 0; i<div2.length;i++){
+                if(year<T_year){
+                    div2[i].style.backgroundColor = "gray";
+                }
+                else if (month < T_month){
+                    div2[i].style.backgroundColor = "gray";
+                }
+                else if (month==T_month&&div2[i].innerHTML<=T_date){
+                    div2[i].style.backgroundColor = "gray";
+                }
+                else{
+                    div2[i].addEventListener("click", handleClick);
+                }
+            }
+        }
+
+        init();
+    }
+
+</script>
+<script>
+    function input(e){
+        const text = e.options[e.selectedIndex].text;
+        document.getElementById('text').value = text;
+        sum();
+    }
+    function input2(e){
+        const text = e.options[e.selectedIndex].text;
+        document.getElementById('text2').value = text;
+        sum();
+    }
+    function sum(){
+        var a = document.getElementById('text').value;
+
+        var b = document.getElementById('text2').value;
+        var c = parseInt(a)+parseInt(1);
+        document.getElementById('startTime').value = a + ":"+b;
+        document.getElementById('endTime').value =c + ":"+b;
+    }
+
+</script>
+<script>
+    function plus(){
+        var plus = document.getElementById('human_number').innerHTML;
+        pluss = parseInt(plus)+parseInt(1);
+        document.getElementById('human_number').innerHTML = pluss;
+        inputHowMany()
+        //맥스가 안정해져있어서 완전한게 아님
+
+    }
+    function minus(){
+        var minus = document.getElementById('human_number').innerHTML;
+        if(minus>1){
+            minuss = parseInt(minus)-parseInt(1);
+            document.getElementById('human_number').innerHTML = minuss;
+            inputHowMany()
+        }
+    }
+    function inputHowMany(){
+        document.getElementById('howMany').value = document.getElementById('human_number').innerHTML;
+    }
+</script>
+
 </body>
+
 </html>

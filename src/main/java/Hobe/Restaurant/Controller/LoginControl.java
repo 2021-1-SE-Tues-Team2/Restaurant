@@ -1,8 +1,6 @@
 package Hobe.Restaurant.Controller;
 
-import Hobe.Restaurant.Domain.Admin;
 import Hobe.Restaurant.Domain.Member;
-import Hobe.Restaurant.Service.AdminService;
 import Hobe.Restaurant.Service.MemberService;
 import Hobe.Restaurant.Service.TableService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,17 +14,15 @@ public class LoginControl {
     private final MemberService memberService;
     public static Member currentMember;
     private final TableService tableService; //임시용 ...아마도 메인화면 보여질 때 테이블 넣어야될듯.
-    private final AdminService adminService;
     @Autowired
-    public LoginControl(MemberService memberService, TableService tableService, AdminService adminService) {
+    public LoginControl(MemberService memberService, TableService tableService) {
         this.memberService = memberService;
         this.tableService = tableService;
-        this.adminService = adminService;
     }
 
     @GetMapping("/login")
     public String loadingLoginPage(){ //이미 로그인을 했으면 로그인 이미 했다고 알리고
-                        //현재 currentMember가 null이면 로그인 페이지 들어가도 됌.
+        //현재 currentMember가 null이면 로그인 페이지 들어가도 됌.
         if(currentMember == null){
             return "LoginPage";
         }
@@ -42,15 +38,6 @@ public class LoginControl {
         else {
             this.currentMember = memberService.getMember(memberform.getPhoneNumber());
             model.addAttribute("data",memberform.getName());
-            if(adminService.isAdminInfo()){
-                Admin admin = adminService.outputAdminInfo();
-                model.addAttribute("address",admin.getAddress());
-                model.addAttribute("startTime",admin.getStartTime());
-                model.addAttribute("endTime",admin.getEndTime());
-                model.addAttribute("phoneNumber",admin.getPhoneNumber());
-                model.addAttribute("email",admin.getEmail());
-            }
-
             //아직 데이터베이스 연동 전이라서 테이블 따로 만들어야됌. 이건 관리자 부분에서 다시 구현
             //tableService.testInputTable(); //임시용 테스트 코드
             //
@@ -84,6 +71,8 @@ public class LoginControl {
     public String SignFail(){
         return "signRegistration";
     }
+
+
 
 
 

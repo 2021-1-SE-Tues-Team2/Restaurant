@@ -40,6 +40,9 @@ public class MyPageController {
     @GetMapping("BookingFind")
     public String BookingFind(Model model){ //예약조회
        Booking nowBooking = bookingService.MyPage_BookingFind(LoginControl.currentMember.getId());
+       if(nowBooking == null){
+           return "MyPage/no_reservation";
+       }
        model.addAttribute("MemberBooking",nowBooking);
         model.addAttribute("MyMember",MemberName);
        return "MyPage/BookFind";
@@ -48,6 +51,9 @@ public class MyPageController {
     public String BookingUpdate(Model model){ //예약변경
        // BookingControl에 있는 코드 재사용 .. -> 이 부분 고쳐야될듯
        Booking nowBooking = bookingService.MyPage_BookingFind(LoginControl.currentMember.getId());
+       if(nowBooking == null){
+           return "MyPage/no_reservation";
+       }
        Date date = new Date();
        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
        String[] today_Date = format.format(date).split(" ");
@@ -59,6 +65,7 @@ public class MyPageController {
        model.addAttribute("tableList",tableList);
        return "MyPage/BookUpdate";
     }
+
     @GetMapping("BookingDelete")
    public String BookingDelete(Model model){ //예약취소
         Booking nowBooking = bookingService.MyPage_BookingFind(LoginControl.currentMember.getId());
@@ -76,10 +83,11 @@ public class MyPageController {
         UpdateBooking.setDate(form.getDate());
         UpdateBooking.setStartTime(form.getStartTime());
         UpdateBooking.setEndTime(form.getEndTime());
-        if(bookingService.ChangeBooking(UpdateBooking,MemberId))
+        if(bookingService.ChangeBooking(UpdateBooking,MemberId)) {
             return "MyPage/myPage";  //변경 완료.
-
-        return "MyPage/myPage";
+        }else{
+            return "MyPage/change_fail";
+        }
     }
     @PostMapping("My_delete")
     public String Booking_Delete(Model model){

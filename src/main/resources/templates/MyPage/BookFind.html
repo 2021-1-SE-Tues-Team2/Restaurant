@@ -6,93 +6,253 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>마이페이지</title>
     <style>
+        * {
+            margin: 0; padding: 0;
+            font-family: '맑은 고딕', 'Malgun Gothic', Gothic, sans-serif ;
+        }
+        a { text-decoration: none; color: white; }
+        li { list-style: none; }
+
+    </style>
+    <!-- 기본 클래스 -->
+    <style>
+        .top-left { float: left; }
+        .top-right { float: right; }
+    </style>
+    <!-- 페이지 -->
+    <style>
         body {
-    margin: 0px; 
-    font-size: 18px;
-    color: #FFF;
-}
-#box {
-    position: relative;
-    height: auto;
-    margin: auto; 
-    background-color: #F90;
-}
-#top {
-    background-color: #333;
-    height: 100px;
-    position: relative;
-}
-.MyInfo{
-    position: fixed;
-    right: 0;
-    top: 0;
-    
-}
-li a{
-    text-decoration: none;
-    color: black;
-}
-li{
-    text-align: center;
-    padding: 20px;
-    list-style: none;
-    border: 2px solid black;
-}
-#left {
-    background-color: #09C;
-    float: left;
-    height: 500px;
-    width: 15%;
-    position: relative;
-}
-#main {
-    background-color: #3C0;
-    float: left;
-    height: 500px;
-    width: 85%;
-    position: relative;
-}
-#bottom {
-    background-color: #C0F;
-    height: 70px;
-    position: relative;
-    clear: both; 
-    float: left; 
-}
+            width: auto; margin: 0 auto;
+            background: #E6E6E6;;
+            min-width: 960px;
+            overflow: hidden;
+
+        }
+
+        #page-wrapper {
+            background: white;
+            padding: 0 100px 0 100px;
+            border-radius: 5px;
+            box-shadow: 0 2px 6px rgba(100, 100, 100, 0.3);
+        }
+    </style>
+    <!-- 헤더 -->
+    <style>
+        #main-header { padding: 40px 50px; }
+        .master-title {
+            font-size: 30px;
+            color: #181818;
+            text-align: center;
+        }
+        .master-description {
+            font-size: 15px; font-weight: 500;
+            color: #383838;
+        }
+    </style>
+    <!--위의 상태창의 오브플로우-->
+    <style>
+
+        nav{
+            overflow:hidden;
+        }
+    </style>
+    <!-- 네비게이션 -->
+    <style>
+        #linkSearch {
+            padding: 0 100px 0 100px;
+            background-color: black;
+            color: white;
+            border-top: 1px solid #C8C8C8;
+            border-bottom: 1px solid #C8C8C8;
+            margin-bottom: 20px;
+            height: 40px;
+        }
+
+        .outer-menu-item {
+            float: left;
+            position: relative;
+        }
+        .outer-menu-item:hover {
+            background: black;
+            color: green
+        }
+
+        .link {
+            display: block;
+            height: 30px; line-height: 30px;
+            text-align: center;
+            padding: 5px 20px;
+        }
+    </style>
+    <style>
+        #middle {
+            width: 960px;
+            overflow:hidden;
+            position: fixed;
+            right: 600px;
+            left: 500px
+        }
+        #left{
+            float: left;
+            width: 200px;
+            background-color: black;
+            border: 1px solid black;
+        }
+        #right{
+            float: right;
+            width: 700px;
+            height: 700px;
+            position: fixed;
+            right: 515px;
+            border: 1px solid black;
+        }
+        #reservation_table{
+            width: 100%;
+            text-align: center;
+        }
+        input{
+            width: 100%;
+        }
+        footer{
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+        }
+        #main-footer{
+            background-color: #1f1d1d;
+            color: white;
+        }
+        #main-section {
+            padding: 0 100px 0 100px;
+            float: left;
+            width: auto;
+        }
+        #table{
+            display: table; margin-left: auto; margin-right: auto;
+            padding: 15px;
+        }
 
     </style>
 </head>
 <body>
 
-        <div id="box">
-    
-            <div id="top">
-                <div class="logo">LOGO</div>
-                <div class="MyInfo"><p th:text="${MyMember}">님</p></div>
-            </div>
+<div id="box" >
 
-            <div id="left">
-                <ol>
-                    <li><a href="/BookingFind">예약조회</a></li>
-                    <li><a href="/BookingUpdate">예약변경</a></li>
-                    <li><a href="/BookingDelete">예약취소</a></li>
-                </ol>
-
-            </div>
-    
-            <div id="main">
-                날짜 : <p th:text="${MemberBooking.Date}">날짜</p>
-                시작 : <p th:text="${MemberBooking.startTime}">시작</p>
-                끝 : <p th:text="${MemberBooking.endTime}">끝</p>
-                테이블번호 : <p th:text="${MemberBooking.tableNumber}">테이블번호</p>
-                몇 명 ? <p th:text="${MemberBooking.howMany}">몇명</p>
-
-            </div>
-    
-            <div id="bottom">bottom</div>
-    
+    <nav id="linkSearch">
+        <div class="top-left">
+            <ul class="outer-menu">
+                <li class="outer-menu-item">
+                    <span class="link"><a href="/LoginAfter/LoginAfterMainPage";>땡땡 레스토랑</a></span>
+                </li>
+                <li class="outer-menu-item">
+                    <span class="link"><a href="/LoginAfter/LoginAfterIntroduction">레스토랑소개</a></span>
+                </li>
+                <li class="outer-menu-item">
+                    <span class="link"><a href="/booking">예약</a></span>
+                </li>
+                <li class="outer-menu-item">
+                    <span class="link"><a href="/Review">리뷰</a></span>
+                </li>
+            </ul>
         </div>
-    
-            
+        <div id="page-wrapper">
+            <div class="top-right">
+                <ul class="outer-menu">
+                    <li class="outer-menu-item">
+                        <span class="link"><a href="/GoMyPage" th:text="${MyMember}">님</a></span>
+                    </li>
+                    <li class="outer-menu-item">
+                        <span class="link"><a href="/Logout">로그아웃</a></span>
+                    </li>
+                </ul>
+            </div>
+    </nav>
+    <div id = "middle">
+        <div id="left">
+            <ul class="outer-menu">
+                <li class="outer-menu-item">
+                    <span class="link"><a href="/BookingFind">예약조회/취소</a></span>
+                </li>
+                <li class="outer-menu-item">
+                    <span class="link"><a href="/BookingUpdate">예약변경</a></span>
+                </li>
+            </ul>
+
+        </div>
+        <div id = "right">
+            <div id="main">
+                <p>고객님의 예약정보</p>
+                <table border="1" id = "reservation_table">
+                    <th>
+                    <td>날짜</td>
+                    <td>시작</td>
+                    <td>끝</td>
+                    <td>테이블 번호</td>
+                    <td> 인원수 </td>
+                    <td> 취소</td>
+                    </th>
+                    <tbody>
+                    <td>예약</td>
+                    <td><p th:text="${MemberBooking.Date}">날짜</p></td>
+                    <td><p th:text="${MemberBooking.startTime}">시작</p></Td>
+                    <td>
+                        <p th:text="${MemberBooking.endTime}">끝</p>
+                    </td>
+                    <td>
+                        <p th:text="${MemberBooking.tableNumber}">테이블번호</p>
+                    </td>
+                    <td>
+                        <p th:text="${MemberBooking.howMany}">몇명</p>
+                    </td>
+                    <td>
+                        <form action="/My_delete" method="POST">
+                            <input type="submit" value="취소">
+                        </form>
+                    </td>
+                    </tbody>
+                </table>
+
+            </div>
+
+        </div>
+    </div>
+    <section id="main-section">
+        <article>
+            <div class="article-body">
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+            </div>
+        </article>
+    </section>
+</div>
+<footer id="main-footer">
+    <div id="table" >
+        <table style="border: 1px solid #444444;" >
+            <tr>
+                <th>주&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;소 : </th>
+                <td>어디어디 어디어디</td>
+            </tr>
+            <tr>
+                <th>영업 시간 : </th>
+                <td>11~20시</td>
+            </tr>
+            <tr>
+                <th>전&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;화 : </th>
+                <td>000-0000-0000</td>
+            </tr>
+            <tr>
+                <th>이 &nbsp;메 &nbsp;일 : </th>
+                <td>ddangddang@gmail.com</td>
+            </tr>
+        </table>
+    </div>
+    <span>Created By Team-Second</span>
+</footer>
+</div>
+
 </body>
 </html>
